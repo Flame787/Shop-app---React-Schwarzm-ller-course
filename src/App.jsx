@@ -4,6 +4,7 @@ import Header from "./components/Header.jsx";
 import Shop from "./components/Shop.jsx";
 import { DUMMY_PRODUCTS } from "./dummy-products.js";
 import Product from './components/Product.jsx';
+import { CartContext } from "./store/shopping-cart-context.jsx";  // importing CONTEXT from the store-folder
 
 function App() {
   // state for keeping track of items in the cart
@@ -68,7 +69,11 @@ function App() {
   }
 
   return (
-    <>
+    // <CartContext>   // - works with React vrsion 19 or higher (<CartContext.Provider> not needed)
+    // Provider is a nested property/component on CartContext-object, needed for Context in older React versions
+      <CartContext.Provider value={{items: []}}>
+      {/* wrapping with CONTEXT-component all components which should be able to access the CONTEXT */}
+      {/* we need to add value-prop and provide the value for this prop (even just initial value) */}
       <Header
         cart={shoppingCart}
         onUpdateCartItemQuantity={handleUpdateCartItemQuantity}
@@ -81,7 +86,7 @@ function App() {
           </li>
         ))}
       </Shop>
-    </>
+    </CartContext.Provider>
   );
 }
 
