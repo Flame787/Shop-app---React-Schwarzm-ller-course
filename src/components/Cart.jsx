@@ -5,11 +5,12 @@ import { useContext } from "react";
 import { CartContext } from "../store/shopping-cart-context";
 
 // export default function Cart({ items, onUpdateItemQuantity }) {  // items-prop not needed anymore
-export default function Cart({ onUpdateItemQuantity }) {
+// export default function Cart({ onUpdateItemQuantity }) {  - no props here anymore, not needed.
+  export default function Cart() {
   // const cartCtx = useContext(CartContext);
   // call the useContext-hook and provide the CartContext component as argument
   // cartCtx = is value provided by the CONTEXT (either initial or updated value, depending on state)
-  const { items } = useContext(CartContext);
+  const { items, updateItemQuantity } = useContext(CartContext);
   // destructured the context-object cartCtx
 
   // const cartCtx = use(CartContext); - alternative of useContext (new, React 19 and >)
@@ -51,11 +52,15 @@ export default function Cart({ onUpdateItemQuantity }) {
                   <span> ({formattedPrice})</span>
                 </div>
                 <div className="cart-item-actions">
-                  <button onClick={() => onUpdateItemQuantity(item.id, -1)}>
+                  {/* <button onClick={() => onUpdateItemQuantity(item.id, -1)}> */} 
+                  {/* adding function from context, instead of a prop: */}
+                  <button onClick={() => updateItemQuantity(item.id, -1)}>
                     -
                   </button>
                   <span>{item.quantity}</span>
-                  <button onClick={() => onUpdateItemQuantity(item.id, 1)}>
+                  {/* <button onClick={() => onUpdateItemQuantity(item.id, 1)}> */}
+                  {/* adding function from context, instead of a prop: */}
+                  <button onClick={() => updateItemQuantity(item.id, 1)}>
                     +
                   </button>
                 </div>

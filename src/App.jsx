@@ -71,6 +71,7 @@ function App() {
   const ctxValue = {
     items: shoppingCart.items,
     addItemToCart: handleAddItemToCart, // function used as a value of the property 'addItemToCart'
+    updateItemQuantity: handleUpdateCartItemQuantity
   };
 
   return (
@@ -88,15 +89,19 @@ function App() {
       <CartContext.Provider value={ctxValue}>
         {/* using the new constant-object 'ctxValue' as a value for our context, so that we don't have
         to use props anymore, and we can not only read state, but also update state via CONTEXT only */}
-      <Header
-        cart={shoppingCart}
-        onUpdateCartItemQuantity={handleUpdateCartItemQuantity}
-      />
+      
+      {/* <Header cart={shoppingCart} onUpdateCartItemQuantity={handleUpdateCartItemQuantity} /> */}
+      {/* removed props from the <Header> component: */}
+      <Header />
+
       {/* /moved logic for handling state from Shop.jsx to App.jsx (Shop.jsx is now just a wrapper-component): */}
       <Shop>
         {DUMMY_PRODUCTS.map((product) => (
           <li key={product.id}>
-            <Product {...product} onAddToCart={handleAddItemToCart} />
+            {/* <Product {...product} onAddToCart={handleAddItemToCart} /> */}
+            {/* removed prop from <Product> component, because we only use context now: */}
+            <Product {...product}  />   
+            
           </li>
         ))}
       </Shop>

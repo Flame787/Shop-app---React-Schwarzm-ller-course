@@ -5,5 +5,6 @@ import { createContext } from "react";
 
 export const CartContext = createContext({   //defining initial values: can be string, number, array or object
     items: [],
-    addItemToCart: () => {}   // adding an empty dummy function - updating state only via context, not props
+    addItemToCart: () => {},   // adding an empty dummy function - updating state only via context, not props
+    updateItemQuantity: () => {}   // another default function, for updating quantity of each item in cart
 });
