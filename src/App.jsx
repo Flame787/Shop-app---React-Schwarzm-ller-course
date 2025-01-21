@@ -3,8 +3,8 @@ import { useState } from "react";
 import Header from "./components/Header.jsx";
 import Shop from "./components/Shop.jsx";
 import { DUMMY_PRODUCTS } from "./dummy-products.js";
-import Product from './components/Product.jsx';
-import { CartContext } from "./store/shopping-cart-context.jsx";  // importing CONTEXT from the store-folder
+import Product from "./components/Product.jsx";
+import { CartContext } from "./store/shopping-cart-context.jsx"; // importing CONTEXT from the store-folder
 
 function App() {
   // state for keeping track of items in the cart
@@ -68,12 +68,26 @@ function App() {
     });
   }
 
+  const ctxValue = {
+    items: shoppingCart.items,
+    addItemToCart: handleAddItemToCart, // function used as a value of the property 'addItemToCart'
+  };
+
   return (
     // <CartContext>   // - works with React vrsion 19 or higher (<CartContext.Provider> not needed)
     // Provider is a nested property/component on CartContext-object, needed for Context in older React versions
-      <CartContext.Provider value={{items: []}}>
-      {/* wrapping with CONTEXT-component all components which should be able to access the CONTEXT */}
-      {/* we need to add value-prop and provide the value for this prop (even just initial value) */}
+
+    // <CartContext.Provider value={{items: []}}>
+    // wrapping with CONTEXT-component all components which should be able to access the CONTEXT
+    // we need to add value-prop and provide the value for this prop (even just initial value) 
+    // <CartContext.Provider value={shoppingCart}>
+    
+      // instead of value={{items: []}}, we put as value the state: {shoppingCart} 
+      // now when we add items to buy into the cart, if cart (upper right) is clicked, the items are there,
+      // and can be added or removed from cart - the state is reflected and can be easily modified 
+      <CartContext.Provider value={ctxValue}>
+        {/* using the new constant-object 'ctxValue' as a value for our context, so that we don't have
+        to use props anymore, and we can not only read state, but also update state via CONTEXT only */}
       <Header
         cart={shoppingCart}
         onUpdateCartItemQuantity={handleUpdateCartItemQuantity}
@@ -92,5 +106,4 @@ function App() {
 
 export default App;
 
-
-// next lession: 167 (Module 10)
+// next lession: 169 (Module 10)

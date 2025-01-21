@@ -19,7 +19,9 @@ export default function Cart({ onUpdateItemQuantity }) {
 
   // const totalPrice = items.reduce(
   // const totalPrice = cartCtx.items.reduce(
-    const totalPrice = items.reduce(   // this works if we have desctructured the cartCtx-object
+
+  const totalPrice = items.reduce(
+    // this works if we have desctructured the cartCtx-object
     (acc, item) => acc + item.price * item.quantity,
     0
   );
@@ -67,4 +69,73 @@ export default function Cart({ onUpdateItemQuantity }) {
       </p>
     </div>
   );
+
+  // A component re-executes: 
+  // if it's parent-component was re-executed, then a child-component also re-executes.
+  // if the state in the component has changed.
+  // if the value of the Context has changed, so that a new value can be reflected in graphic UI.
+
+  // ** If we would use the context.Consumer-property (older, more complicated approach):
+
+  //   return (
+  //     <CartContext.Consumer>
+  //       {/* <CartContext.Consumer> is used in older React-versions, for consuming context in child-components */}
+  //       {/* we should pass a function as a child between opening and closing consumer-component,
+  //       and that function will receive a context-value which is consumed here as a parametar,
+  //       and returns a JSX-code that should be output by this component - this function is an extra wrapper */}
+  //
+  //       {(cartCtx) => {
+
+  //         // moved the calculation from outside to inside the consumer-component:
+  //         const totalPrice = items.reduce(
+  //           // this works if we have desctructured the cartCtx-object
+  //           (acc, item) => acc + item.price * item.quantity,
+  //           0
+  //         );
+  //         const formattedTotalPrice = `$${totalPrice.toFixed(2)}`;
+
+  //         return (
+  //           <div id="cart">
+  //
+  //             {cartCtx.items.length === 0 && <p>No items in cart!</p>}
+  //             {/* // this works if we have desctructured the cartCtx-object */}
+
+  //             {cartCtx.items.length > 0 && (
+  //               <ul id="cart-items">
+  //
+  //                 {cartCtx.items.map((item) => {
+  //                   const formattedPrice = `$${item.price.toFixed(2)}`;
+
+  //                   return (
+  //                     <li key={item.id}>
+  //                       <div>
+  //                         <span>{item.name}</span>
+  //                         <span> ({formattedPrice})</span>
+  //                       </div>
+  //                       <div className="cart-item-actions">
+  //                         <button
+  //                           onClick={() => onUpdateItemQuantity(item.id, -1)}
+  //                         >
+  //                           -
+  //                         </button>
+  //                         <span>{item.quantity}</span>
+  //                         <button
+  //                           onClick={() => onUpdateItemQuantity(item.id, 1)}
+  //                         >
+  //                           +
+  //                         </button>
+  //                       </div>
+  //                     </li>
+  //                   );
+  //                 })}
+  //               </ul>
+  //             )}
+  //             <p id="cart-total-price">
+  //               Cart Total: <strong>{formattedTotalPrice}</strong>
+  //             </p>
+  //           </div>
+  //         );
+  //       }}
+  //     </CartContext.Consumer>
+  //   );
 }
